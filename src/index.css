@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    scroll-padding-top: 80px;
+  }
+  body {
+    @apply bg-shell font-sans text-ink;
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: clip;
+  }
+  ::selection { background: #EFC3CD; color: #292326; }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 2px solid #754653;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  [tabindex='-1']:focus { outline: none; }
+  input, textarea, select, button { font: inherit; }
+}
+
+@layer components {
+  .gutter {
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
+  }
+  @media (min-width: 768px) {
+    .gutter { padding-left: max(40px, env(safe-area-inset-left, 0px)); padding-right: max(40px, env(safe-area-inset-right, 0px)); }
+  }
+  @media (min-width: 1280px) {
+    .gutter { padding-left: 64px; padding-right: 64px; }
+  }
+  .page { @apply mx-auto w-full max-w-page; }
+
+  /* Escala tipográfica editorial */
+  .display-xl { font-family: theme('fontFamily.serif'); font-weight: 400; line-height: 0.9; letter-spacing: -0.025em; font-size: clamp(3.9rem, 14vw, 9rem); }
+  .display-lg { font-family: theme('fontFamily.serif'); font-weight: 400; line-height: 0.98; letter-spacing: -0.02em; font-size: clamp(2.7rem, 7vw, 5.6rem); }
+  .display-md { font-family: theme('fontFamily.serif'); font-weight: 400; line-height: 1.02; letter-spacing: -0.015em; font-size: clamp(2.3rem, 4.8vw, 4rem); }
+  .lede { font-size: clamp(1.04rem, 1.3vw, 1.18rem); line-height: 1.7; color: theme('colors.stone'); max-width: 34rem; }
+
+  /* Unifica a temperatura das fotos: levemente mais quente e rosada */
+  .photo-tone { filter: saturate(0.9) contrast(0.98) brightness(1.02) sepia(0.06) hue-rotate(-6deg); }
+
+  .arch { border-radius: 999px 999px 28px 28px; }
+  .arch-lg { border-radius: 999px 999px 0 0; }
+
+  /* Grão fotográfico discreto para dar matéria aos fundos lisos */
+  .grain { position: relative; isolation: isolate; }
+  .grain::after {
+    content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .35; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .46 0 0 0 0 .27 0 0 0 0 .33 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .eyebrow { @apply text-[0.72rem] font-semibold uppercase tracking-label; }
+
+  .field {
+    @apply block w-full rounded-2xl border border-wine/10 bg-shell px-4 py-3.5 text-[1rem] text-ink transition-[border-color,background-color,box-shadow] duration-300 placeholder:text-stone/55 hover:border-wine/25 focus:border-wine/50 focus:bg-paper focus:outline-none focus:ring-4 focus:ring-petal/50;
+  }
+  .field[aria-invalid='true'] { @apply border-wine/60 bg-paper; }
+  .field-label { @apply mb-2 block text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-stone; }
+
+  .chip {
+    @apply inline-flex min-h-[46px] cursor-pointer select-none items-center gap-2 rounded-full border border-wine/15 bg-shell px-5 text-[0.94rem] text-ink transition-all duration-300 ease-silk hover:border-wine/40 hover:bg-blush/60;
+  }
+  .chip-on { @apply border-wine bg-wine text-paper hover:border-wine hover:bg-wine; }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat;
+    transition: background-size .5s cubic-bezier(.22,.61,.36,1);
+  }
+  .link-underline:hover, .link-underline:focus-visible { background-size: 100% 1px; }
+
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+@keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+.animate-drip { animation: drip 2.8s cubic-bezier(.65,0,.35,1) infinite; }
+
+@keyframes ritual-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
