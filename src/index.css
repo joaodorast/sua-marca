@@ -90,4 +90,3 @@
 @keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 .animate-drip { animation: drip 2.8s cubic-bezier(.65,0,.35,1) infinite; }
 
-@keyframes ritual-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
